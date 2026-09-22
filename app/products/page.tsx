@@ -21,7 +21,7 @@ export default function ProductsPage() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="bg-black text-white min-h-screen font-inter py-12 px-6 lg:px-10 max-w-[1440px] mx-auto space-y-10">
+    <div className="bg-black text-white min-h-screen font-inter py-12 px-6 lg:px-10 max-w-[1440px] mx-auto space-y-20">
       
       {/* Title & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/20 pb-8">
@@ -68,7 +68,7 @@ export default function ProductsPage() {
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all"
+            className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all relative"
           >
             <Link href={`/products/${product.id}`} className="relative block aspect-3/4 overflow-hidden bg-zinc-900">
               <img
@@ -82,24 +82,29 @@ export default function ProductsPage() {
             </Link>
 
             <div className="p-5 bg-[#111111] flex flex-col justify-between flex-1 space-y-4">
-              <div>
-                <Link href={`/products/${product.id}`}>
-                  <h3 className="font-inter text-sm font-bold uppercase tracking-wider text-white hover:underline">
-                    {product.name}
-                  </h3>
-                </Link>
-                <p className="font-inter text-xs text-zinc-400 mt-2 line-clamp-2 uppercase">
+              <Link href={`/products/${product.id}`} className="block space-y-2">
+                <h3 className="font-inter text-sm font-bold uppercase tracking-wider text-white group-hover:underline">
+                  {product.name}
+                </h3>
+                <p className="font-inter text-xs text-zinc-400 line-clamp-2 uppercase">
                   {product.description}
                 </p>
-              </div>
+              </Link>
 
               <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <span className="font-inter text-sm font-extrabold text-white">
-                  {formatPrice(product.price)}
-                </span>
+                <Link href={`/products/${product.id}`}>
+                  <span className="font-inter text-sm font-extrabold text-white hover:underline">
+                    {formatPrice(product.price)}
+                  </span>
+                </Link>
                 <button
-                  onClick={() => addToCart(product)}
-                  className="px-4 py-2 border border-white font-lexend text-[11px] font-semibold tracking-widest uppercase text-white hover:bg-white hover:text-black transition-all flex items-center gap-2"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(product);
+                  }}
+                  className="px-4 py-2 border border-white font-lexend text-[11px] font-semibold tracking-widest uppercase text-white hover:bg-white hover:text-black transition-all flex items-center gap-2 relative z-10"
                 >
                   <ShoppingBag className="w-3.5 h-3.5" /> ADD
                 </button>

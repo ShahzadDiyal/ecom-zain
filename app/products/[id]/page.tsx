@@ -29,7 +29,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
       
       {/* MAIN PRODUCT DISPLAY */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-10 py-12">
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-10 py-20 md:mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* LEFT: GALLERY IMAGES (7 Cols) */}
@@ -183,7 +183,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           {relatedProducts.map((p) => (
             <div
               key={p.id}
-              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all"
+              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all relative"
             >
               <Link href={`/products/${p.id}`} className="relative aspect-3/4 overflow-hidden bg-zinc-900 block">
                 <img
@@ -194,17 +194,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </Link>
 
               <div className="p-4 bg-[#111111]/90 flex items-center justify-between">
-                <div>
-                  <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white">
+                <Link href={`/products/${p.id}`} className="block">
+                  <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white group-hover:underline">
                     {p.name}
                   </h4>
-                  <p className="font-inter text-xs text-zinc-400 mt-1 font-medium">
+                  <p className="font-inter text-xs text-zinc-400 mt-1 font-medium group-hover:underline">
                     {formatPrice(p.price)}
                   </p>
-                </div>
+                </Link>
                 <button
-                  onClick={() => addToCart(p, 1, undefined, selectedSize)}
-                  className="w-8 h-8 rounded-full border border-white/30 hover:border-white flex items-center justify-center text-white hover:scale-110 transition-transform"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(p, 1, undefined, selectedSize);
+                  }}
+                  className="w-8 h-8 rounded-full border border-white/30 hover:border-white flex items-center justify-center text-white hover:scale-110 transition-transform relative z-10"
                   title="Quick Add"
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />

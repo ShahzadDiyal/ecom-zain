@@ -67,19 +67,19 @@ export default function HomePage() {
           {/* Badge: —— 77C3 COLLECTION —— */}
           <div className="flex items-center justify-center gap-4">
             <div className="w-12 sm:w-16 h-[1.5px] bg-white" />
-            <span className="font-lexend text-xs sm:text-sm tracking-[0.25em] font-medium text-white uppercase">
+            <span className="font-lexend text-[14px] sm:text-[16px] tracking-[0.25em] font-medium text-white uppercase">
               77C3 COLLECTION
             </span>
             <div className="w-12 sm:w-16 h-[1.5px] bg-white" />
           </div>
 
           {/* Headline: WINTER, REDEFINED. */}
-          <h1 className="font-serif-display text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight uppercase leading-none text-white drop-shadow-2xl">
+          <h1 className="font-serif-display text-[40px] sm:text-[60px] lg:text-[80px] font-bold tracking-tight uppercase leading-none text-white drop-shadow-2xl">
             WINTER, REDEFINED.
           </h1>
 
           {/* Subtitle: BUILT FOR COLD DAYS. DESIGNED FOR EVERYWHERE. */}
-          <div className="font-lexend text-xs sm:text-sm tracking-[0.2em] uppercase text-white leading-relaxed max-w-xl mx-auto font-normal space-y-1">
+          <div className="font-lexend text-[16px] sm:text-[24px] tracking-[0.2em] uppercase text-white leading-relaxed max-w-xl mx-auto font-normal space-y-1">
             <p>BUILT FOR COLD DAYS.</p>
             <p>DESIGNED FOR EVERYWHERE.</p>
           </div>
@@ -528,32 +528,41 @@ export default function HomePage() {
           {bestSellers.map((product) => (
             <div
               key={product.id}
-              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all"
+              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all relative"
             >
-              <div className="relative aspect-3/4 overflow-hidden bg-zinc-900">
+              <Link href={`/products/${product.id}`} className="relative aspect-3/4 overflow-hidden bg-zinc-900 block">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-              </div>
+              </Link>
 
               <div className="p-4 bg-[#111111]/90 flex flex-col justify-between space-y-3">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white line-clamp-1">
-                    {product.name}
-                  </h4>
+                  <Link href={`/products/${product.id}`} className="block">
+                    <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white line-clamp-1 group-hover:underline">
+                      {product.name}
+                    </h4>
+                  </Link>
                   <button
-                    onClick={() => addToCart(product)}
-                    className="text-white hover:scale-110 transition-transform p-1"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                    className="text-white hover:scale-110 transition-transform p-1 relative z-10"
                     title="Add to Cart"
                   >
                     <ShoppingBag className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="font-inter text-xs font-semibold text-zinc-300">
-                  {formatPrice(product.price)}
-                </p>
+                <Link href={`/products/${product.id}`}>
+                  <p className="font-inter text-xs font-semibold text-zinc-300 hover:underline">
+                    {formatPrice(product.price)}
+                  </p>
+                </Link>
               </div>
             </div>
           ))}
@@ -767,32 +776,41 @@ export default function HomePage() {
           {newArrivals.map((product, idx) => (
             <div
               key={idx}
-              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all"
+              className="group border border-white/30 bg-black overflow-hidden flex flex-col hover:border-white transition-all relative"
             >
-              <div className="relative aspect-3/4 overflow-hidden bg-zinc-900">
+              <Link href={`/products/${product.id}`} className="relative aspect-3/4 overflow-hidden bg-zinc-900 block">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-              </div>
+              </Link>
 
               <div className="p-4 bg-[#111111]/90 flex flex-col justify-between space-y-3">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white line-clamp-1">
-                    {product.name}
-                  </h4>
+                  <Link href={`/products/${product.id}`} className="block">
+                    <h4 className="font-inter text-xs font-semibold uppercase tracking-wider text-white line-clamp-1 group-hover:underline">
+                      {product.name}
+                    </h4>
+                  </Link>
                   <button
-                    onClick={() => addToCart(product)}
-                    className="text-white hover:scale-110 transition-transform p-1"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                    className="text-white hover:scale-110 transition-transform p-1 relative z-10"
                     title="Add to Cart"
                   >
                     <ShoppingBag className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="font-inter text-xs font-semibold text-zinc-300">
-                  {formatPrice(product.price)}
-                </p>
+                <Link href={`/products/${product.id}`}>
+                  <p className="font-inter text-xs font-semibold text-zinc-300 hover:underline">
+                    {formatPrice(product.price)}
+                  </p>
+                </Link>
               </div>
             </div>
           ))}
