@@ -87,9 +87,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
-      
+
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 mt-10">
-        
+
         {/* HEADER ROW */}
         <div className="flex justify-between items-center border-b border-white/10 pb-6">
           <div className="flex items-center gap-6">
@@ -116,10 +116,10 @@ export default function CheckoutPage() {
 
         {/* MAIN CONTAINER SPLIT */}
         <form onSubmit={handleSubmit} className="border border-white grid grid-cols-1 lg:grid-cols-12">
-          
+
           {/* LEFT FORM COLUMN (7 Cols / 776px) */}
           <div className="lg:col-span-7 bg-[#070606] p-6 sm:p-10 space-y-10 border-b lg:border-b-0 lg:border-r border-white">
-            
+
             {/* CONTACT INFORMATION */}
             <div className="space-y-6">
               <h2 className="font-inter text-xl font-medium uppercase tracking-wider text-white">
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
 
               <div className="space-y-4">
                 <h4 className="font-inter text-sm font-medium text-white">PAYMENT METHOD</h4>
-                
+
                 <div className="space-y-3 font-inter text-sm text-white">
                   {['Cash on Delivery', 'Card', 'Bank Transfer'].map((method) => (
                     <label
@@ -231,9 +231,8 @@ export default function CheckoutPage() {
                       onClick={() => setFormData({ ...formData, paymentMethod: method })}
                       className="flex items-center gap-4 cursor-pointer py-1"
                     >
-                      <div className={`w-6 h-6 rounded-full border border-white flex items-center justify-center transition-colors ${
-                        formData.paymentMethod === method ? 'bg-white' : 'bg-transparent'
-                      }`}>
+                      <div className={`w-6 h-6 rounded-full border border-white flex items-center justify-center transition-colors ${formData.paymentMethod === method ? 'bg-white' : 'bg-transparent'
+                        }`}>
                         {formData.paymentMethod === method && (
                           <div className="w-2.5 h-2.5 rounded-full bg-black" />
                         )}
@@ -262,7 +261,7 @@ export default function CheckoutPage() {
 
           {/* RIGHT ORDER SUMMARY SIDEBAR (5 Cols / 550px) */}
           <div className="lg:col-span-5 bg-[#070606] p-6 sm:p-10 space-y-8">
-            
+
             <h2 className="font-inter text-2xl font-semibold capitalize text-white">
               Order summary
             </h2>
@@ -271,7 +270,7 @@ export default function CheckoutPage() {
             <div className="space-y-6 divide-y divide-white/20">
               {cart.map(({ product, selectedColor, selectedSize }) => (
                 <div key={product.id} className="pt-6 first:pt-0 flex items-center gap-6">
-                  
+
                   {/* Thumbnail Image */}
                   <div className="aspect-[153/137] w-32 bg-zinc-950 border border-white/10 overflow-hidden shrink-0">
                     <img

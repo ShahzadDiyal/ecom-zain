@@ -26,17 +26,17 @@ export default function Navbar() {
   return (
     <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent border-none">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-10 h-20 flex items-center justify-between">
-        
+
         {/* Left Icons */}
         <div className="flex items-center gap-3 sm:gap-6">
           <Link href="/products" className="text-white hover:opacity-80 transition-opacity" title="Search">
             <Search className="w-5 h-5 stroke-[1.75]" />
           </Link>
-          
+
           {/* User Profile / Auth Dropdown */}
           <div className="relative" ref={menuRef}>
-            <button 
-              onClick={() => setDropdownOpen(!dropdownOpen)} 
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
               className="text-white hover:opacity-80 transition-opacity flex items-center gap-1 focus:outline-none"
               title="Account"
             >
@@ -55,8 +55,8 @@ export default function Navbar() {
                       <p className="text-neutral-400 text-[10px] uppercase">{userProfile?.role || 'User'}</p>
                     </div>
                     {userProfile?.role === 'admin' && (
-                      <Link 
-                        href="/admin" 
+                      <Link
+                        href="/admin"
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2 px-4 py-2.5 text-red-400 hover:bg-neutral-900 transition-colors uppercase font-medium"
                       >

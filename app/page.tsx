@@ -72,10 +72,10 @@ export default function HomePage() {
 
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black overflow-x-hidden">
-      
+
       {/* 1. HERO BANNER - FULLSCREEN OVERLAY WITH TRANSPARENT NAVBAR */}
       <section className="relative w-full h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
-        
+
         {/* Fullscreen Hero Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -88,7 +88,7 @@ export default function HomePage() {
 
         {/* Hero Center Overlay Content */}
         <div className="relative z-10 max-w-5xl mx-auto space-y-4 sm:space-y-6 pt-16">
-          
+
           {/* Badge: —— 77C3 COLLECTION —— */}
           <div className="flex items-center justify-center gap-2 sm:gap-4 md:mb-20">
             <div className="w-8 sm:w-16 h-[1.5px] bg-white" />
@@ -128,7 +128,7 @@ export default function HomePage() {
       {/* 2. PERKS BAR (2 products/items per row on mobile) */}
       <section className="border-b border-white/50 bg-black py-8 px-4 sm:px-6 lg:px-10">
         <div className="max-w-[1440px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-          
+
           <div className="flex items-center gap-3 sm:gap-6">
             <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[1.5] shrink-0" />
             <div className="space-y-0.5">
@@ -189,9 +189,8 @@ export default function HomePage() {
             <button
               key={idx}
               onClick={() => setCurrentFeaturedSlide(idx)}
-              className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-45 transition-all ${
-                activeIndex === idx ? 'bg-white shadow-lg scale-110' : 'bg-white/50 hover:bg-white'
-              }`}
+              className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-45 transition-all ${activeIndex === idx ? 'bg-white shadow-lg scale-110' : 'bg-white/50 hover:bg-white'
+                }`}
               title={`Slide ${idx + 1}`}
             />
           ))}
@@ -199,7 +198,7 @@ export default function HomePage() {
 
         {/* Showcase Area */}
         <div className="relative min-h-[520px] sm:min-h-[660px] mt-6 sm:mt-12">
-          
+
           {/* Watermark + Top Number Indicator */}
           <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
             <div className="absolute top-0 right-0 z-20 flex items-center gap-4 px-6 lg:px-10">
@@ -219,7 +218,7 @@ export default function HomePage() {
 
           {/* Main Grid: Left Image, Right Specs */}
           <div className="relative z-10 w-full min-h-[520px] sm:min-h-[660px] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center px-6 lg:px-10 max-w-[1440px] mx-auto">
-            
+
             {/* Left Model Image Container */}
             <div className="lg:col-span-7 relative flex justify-center">
               <div className="relative w-[280px] sm:w-[430px] lg:w-[580px] h-[360px] sm:h-[520px] lg:h-[700px]">
@@ -311,11 +310,10 @@ export default function HomePage() {
                       e.stopPropagation();
                       toggleWishlist(product);
                     }}
-                    className={`absolute top-2.5 right-2.5 p-1.5 rounded-full border transition-all z-20 ${
-                      wished
-                        ? 'bg-red-600 border-red-600 text-white fill-white'
-                        : 'bg-black/70 border-white/30 text-white hover:bg-white hover:text-black'
-                    }`}
+                    className={`absolute top-2.5 right-2.5 p-1.5 rounded-full border transition-all z-20 ${wished
+                      ? 'bg-red-600 border-red-600 text-white fill-white'
+                      : 'bg-black/70 border-white/30 text-white hover:bg-white hover:text-black'
+                      }`}
                     title={wished ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   >
                     <Heart className={`w-3.5 h-3.5 ${wished ? 'fill-white' : ''}`} />
@@ -358,7 +356,7 @@ export default function HomePage() {
 
       {/* 5. TARZ ESSENTIAL JACKET PROMO */}
       <section className="relative w-full min-h-[500px] sm:min-h-[700px] flex items-center overflow-hidden my-12 sm:my-16 bg-zinc-950 border-y border-white/20">
-        
+
         <img
           src="/images/tarz-section.png"
           alt=""
@@ -369,7 +367,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_45%)]" />
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 w-full min-h-[500px] sm:min-h-[700px] py-12 sm:py-0 flex flex-col justify-between sm:block">
-          
+
           <div className="relative sm:absolute top-0 sm:top-16 right-0 sm:right-6 lg:right-10 w-full max-w-lg text-left sm:text-right z-30">
             <p className="font-inter text-sm sm:text-xl font-medium tracking-wide uppercase text-white leading-relaxed ml-auto">
               TARZ IS BUILT AROUND WINTER ESSENTIALS THAT BALANCE COMFORT, CHARACTER AND EVERYDAY WEAR.
@@ -439,11 +437,10 @@ export default function HomePage() {
                       e.stopPropagation();
                       toggleWishlist(product);
                     }}
-                    className={`absolute top-2.5 right-2.5 p-1.5 rounded-full border transition-all z-20 ${
-                      wished
-                        ? 'bg-red-600 border-red-600 text-white fill-white'
-                        : 'bg-black/70 border-white/30 text-white hover:bg-white hover:text-black'
-                    }`}
+                    className={`absolute top-2.5 right-2.5 p-1.5 rounded-full border transition-all z-20 ${wished
+                      ? 'bg-red-600 border-red-600 text-white fill-white'
+                      : 'bg-black/70 border-white/30 text-white hover:bg-white hover:text-black'
+                      }`}
                     title={wished ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   >
                     <Heart className={`w-3.5 h-3.5 ${wished ? 'fill-white' : ''}`} />

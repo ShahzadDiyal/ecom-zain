@@ -16,10 +16,10 @@ function ConfirmationContent() {
 
   return (
     <div className="max-w-[1440px] w-full mx-auto px-6 lg:px-10 py-16 mt-10 flex-1 flex flex-col items-center justify-center text-center space-y-12">
-      
+
       {/* HEADINGS & CHECKMARK */}
       <div className="space-y-10 flex flex-col items-center max-w-xl mx-auto">
-        
+
         <div className="space-y-3">
           <h1 className="font-inter text-3xl sm:text-5xl font-medium tracking-tight uppercase text-white">
             ORDER CONFIRMED.

@@ -27,9 +27,9 @@ export default function CartPage() {
 
   return (
     <div className="bg-black mt-10  text-white min-h-screen font-inter selection:bg-white selection:text-black">
-      
+
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 mt-10 ">
-        
+
         {/* HEADER ROW */}
         <div className="flex justify-between items-center border-b border-white/10 pb-6">
           <div className="flex items-center gap-6">
@@ -61,7 +61,7 @@ export default function CartPage() {
               key={`${product.id}-${selectedSize || 'M'}-${selectedColor || 'Burgundy'}`}
               className="py-10 grid grid-cols-1 sm:grid-cols-12 gap-8 items-center"
             >
-              
+
               {/* Product Thumbnail (3 Cols) */}
               <div className="sm:col-span-3 lg:col-span-2">
                 <div className="aspect-[217/240] w-full max-w-[217px] bg-zinc-950 border border-white/10 overflow-hidden">
@@ -75,14 +75,14 @@ export default function CartPage() {
 
               {/* Details & Controls (9 Cols) */}
               <div className="sm:col-span-9 lg:col-span-10 flex flex-col justify-between space-y-8">
-                
+
                 {/* Title & Price */}
                 <div className="flex justify-between items-start">
                   <div className="space-y-4">
                     <h3 className="font-inter text-lg sm:text-xl font-medium uppercase text-white tracking-wider">
                       {product.name}
                     </h3>
-                    
+
                     <div className="space-y-2 font-inter text-sm text-zinc-300">
                       <div className="flex items-center gap-3">
                         <span className="text-white/70">Color</span>
@@ -102,7 +102,7 @@ export default function CartPage() {
 
                 {/* Quantity & Remove Row */}
                 <div className="flex justify-between items-center pt-2">
-                  
+
                   {/* Quantity Control Circles */}
                   <div className="flex items-center gap-4">
                     <button
@@ -112,7 +112,7 @@ export default function CartPage() {
                     >
                       -
                     </button>
-                    
+
                     <span className="w-8 h-8 rounded-full bg-white text-black font-inter text-sm font-bold flex items-center justify-center">
                       {quantity}
                     </span>
@@ -145,7 +145,7 @@ export default function CartPage() {
 
         {/* ORDER SUMMARY SECTION */}
         <div className="pt-12 border-t border-white/20 space-y-8">
-          
+
           <div className="space-y-2">
             <h2 className="font-inter text-2xl font-semibold capitalize text-white">
               Order summary

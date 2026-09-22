@@ -43,14 +43,14 @@ export default function ProductsPage() {
     return products.filter((product) => {
       const matchesCategory = selectedCategory === 'All' || product.category.toLowerCase() === selectedCategory.toLowerCase();
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            (product.description || "").toLowerCase().includes(searchQuery.toLowerCase());
+        (product.description || "").toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }, [products, selectedCategory, searchQuery]);
 
   return (
     <div className="bg-black text-white min-h-screen font-inter py-10 px-6 lg:px-10 max-w-[1440px] mx-auto space-y-12">
-      
+
       {/* Title & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/20 pb-6 mt-10">
         <div>
@@ -80,11 +80,10 @@ export default function ProductsPage() {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-5 py-2.5 font-lexend text-xs tracking-widest uppercase transition-all whitespace-nowrap ${
-              selectedCategory === category
+            className={`px-5 py-2.5 font-lexend text-xs tracking-widest uppercase transition-all whitespace-nowrap ${selectedCategory === category
                 ? 'bg-white text-black font-bold'
                 : 'bg-zinc-950 border border-white/20 text-zinc-400 hover:text-white hover:border-white'
-            }`}
+              }`}
           >
             {category}
           </button>
@@ -121,11 +120,10 @@ export default function ProductsPage() {
                     e.stopPropagation();
                     toggleWishlist(product);
                   }}
-                  className={`absolute top-3 right-3 p-2 rounded-full border transition-all z-20 ${
-                    wished
+                  className={`absolute top-3 right-3 p-2 rounded-full border transition-all z-20 ${wished
                       ? 'bg-red-600 border-red-600 text-white fill-white'
                       : 'bg-black/70 border-white/30 text-white hover:bg-white hover:text-black'
-                  }`}
+                    }`}
                   title={wished ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 >
                   <Heart className={`w-3.5 h-3.5 ${wished ? 'fill-white' : ''}`} />

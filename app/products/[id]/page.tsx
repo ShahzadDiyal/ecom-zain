@@ -48,14 +48,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
-      
+
       {/* MAIN PRODUCT DISPLAY */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10 py-20 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           {/* LEFT: GALLERY IMAGES (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
-            
+
             {/* Main Image */}
             <div className="relative aspect-4/3 sm:aspect-square w-full bg-zinc-950 border border-white/20 overflow-hidden">
               <img
@@ -72,9 +72,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(img)}
-                    className={`aspect-4/3 w-full bg-zinc-950 border overflow-hidden transition-all ${
-                      selectedImage === img ? 'border-white opacity-100 scale-[0.98]' : 'border-white/20 opacity-60 hover:opacity-100'
-                    }`}
+                    className={`aspect-4/3 w-full bg-zinc-950 border overflow-hidden transition-all ${selectedImage === img ? 'border-white opacity-100 scale-[0.98]' : 'border-white/20 opacity-60 hover:opacity-100'
+                      }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -87,7 +86,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
           {/* RIGHT: DETAILS & ACTIONS (5 Cols) */}
           <div className="lg:col-span-5 space-y-8 text-left">
-            
+
             {/* Title */}
             <div>
               <h1 className="font-inter text-3xl sm:text-4xl font-semibold uppercase tracking-tight text-white underline underline-offset-8">
@@ -134,11 +133,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`w-9 h-9 rounded-full flex items-center justify-center font-inter text-sm font-medium transition-all ${
-                      selectedSize === size
+                    className={`w-9 h-9 rounded-full flex items-center justify-center font-inter text-sm font-medium transition-all ${selectedSize === size
                         ? 'bg-white text-black font-bold shadow-lg scale-105'
                         : 'border border-white text-white hover:border-white/80'
-                    }`}
+                      }`}
                   >
                     {size}
                   </button>
@@ -165,11 +163,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
                 <button
                   onClick={() => toggleWishlist(product)}
-                  className={`p-4 border transition-all ${
-                    isInWishlist(product.id)
+                  className={`p-4 border transition-all ${isInWishlist(product.id)
                       ? 'bg-red-600 border-red-600 text-white'
                       : 'border-white text-white hover:bg-white hover:text-black'
-                  }`}
+                    }`}
                   title={isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 >
                   <Heart className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-white' : ''}`} />

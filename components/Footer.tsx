@@ -6,24 +6,24 @@ export default function Footer() {
   return (
     <footer className="w-full bg-gradient-to-b from-[#0B0B0B] to-black border-t border-white/20 pt-16 pb-8 px-6 lg:px-10 text-white font-lexend">
       <div className="max-w-[1440px] mx-auto space-y-12">
-        
-       {/* Brand Logo Header */}
-<div className="flex justify-center">
-  <Link href="/" className="flex items-center">
-    <Image
-      src="/logo.png"
-      alt="TARZ"
-      width={140}
-      height={50}
-      className="h-auto w-[190px] object-contain"
-      priority
-    />
-  </Link>
-</div>
+
+        {/* Brand Logo Header */}
+        <div className="flex justify-center">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="TARZ"
+              width={140}
+              height={50}
+              className="h-auto w-[190px] object-contain"
+              priority
+            />
+          </Link>
+        </div>
 
         {/* 4 Footer Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-4xl mx-auto pt-4">
-          
+
           {/* SHOP */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold tracking-wider text-white">SHOP</h4>
