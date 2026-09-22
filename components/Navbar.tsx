@@ -25,10 +25,10 @@ export default function Navbar() {
 
   return (
     <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent border-none">
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-10 h-20 flex items-center justify-between">
         
         {/* Left Icons */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <Link href="/products" className="text-white hover:opacity-80 transition-opacity" title="Search">
             <Search className="w-5 h-5 stroke-[1.75]" />
           </Link>
@@ -108,14 +108,14 @@ export default function Navbar() {
               alt="TARZ"
               width={140}
               height={50}
-              className="h-auto w-[190px] object-contain"
+              className="h-auto w-[130px] sm:w-[190px] object-contain"
               priority
             />
           </Link>
         </div>
 
         {/* Right Action Icons */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <Link href="/cart" className="relative text-white hover:opacity-80 transition-opacity" title="Cart">
             <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
             {cartCount > 0 && (

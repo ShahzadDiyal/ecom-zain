@@ -73,7 +73,7 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="bg-black text-white min-h-[70vh] flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter md:mt-10">
+      <div className="bg-black text-white min-h-[70vh] flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter mt-10">
         <h2 className="font-serif-display text-4xl font-extrabold uppercase">NO ITEMS TO CHECKOUT</h2>
         <Link
           href="/products"
@@ -88,14 +88,14 @@ export default function CheckoutPage() {
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
       
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 md:mt-10">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 mt-10">
         
         {/* HEADER ROW */}
         <div className="flex justify-between items-center border-b border-white/10 pb-6">
           <div className="flex items-center gap-6">
             <Link
               href="/cart"
-              className="w-12 h-12 rounded-full border border-blue-600 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white transition-colors"
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"
               title="Back to Bag"
             >
               <ArrowLeft className="w-5 h-5 stroke-[2]" />

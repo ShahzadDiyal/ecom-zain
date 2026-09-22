@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-10 border-t border-white/10 flex justify-end text-xs tracking-widest text-zinc-500 font-semibold">
+        <div className="pt-10 border-t border-white/10 flex justify-center md:justify-end text-xs tracking-widest text-zinc-500 font-semibold">
           © 2026 TARZ
         </div>
 

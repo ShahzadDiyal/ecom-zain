@@ -15,7 +15,7 @@ function ConfirmationContent() {
     : (lastOrder?.orderId ? `#${lastOrder.orderId}` : '#TZ10284');
 
   return (
-    <div className="max-w-[1440px] w-full mx-auto px-6 lg:px-10 py-16 md:mt-10 flex-1 flex flex-col items-center justify-center text-center space-y-12">
+    <div className="max-w-[1440px] w-full mx-auto px-6 lg:px-10 py-16 mt-10 flex-1 flex flex-col items-center justify-center text-center space-y-12">
       
       {/* HEADINGS & CHECKMARK */}
       <div className="space-y-10 flex flex-col items-center max-w-xl mx-auto">

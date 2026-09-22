@@ -50,7 +50,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
       
       {/* MAIN PRODUCT DISPLAY */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-10 py-20 md:mt-10">
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-10 py-20 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* LEFT: GALLERY IMAGES (7 Cols) */}
@@ -216,7 +216,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {relatedProducts.map((p) => (
             <div
               key={p.id}

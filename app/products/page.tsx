@@ -52,7 +52,7 @@ export default function ProductsPage() {
     <div className="bg-black text-white min-h-screen font-inter py-10 px-6 lg:px-10 max-w-[1440px] mx-auto space-y-12">
       
       {/* Title & Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/20 pb-6 md:mt-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/20 pb-6 mt-10">
         <div>
           <h1 className="font-serif-display text-3xl sm:text-5xl font-bold uppercase tracking-tight">
             TARZ COLLECTION
@@ -91,8 +91,8 @@ export default function ProductsPage() {
         ))}
       </div>
 
-      {/* Compact Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Compact Product Grid (2 products per row on mobile) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {filteredProducts.map((product) => {
           const wished = isInWishlist(product.id);
           return (
@@ -143,7 +143,7 @@ export default function ProductsPage() {
                   </p>
                 </Link>
 
-                <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-white/10">
                   <Link href={`/products/${product.id}`}>
                     <span className="font-inter text-xs font-extrabold text-white hover:underline">
                       {formatPrice(product.price)}
@@ -156,7 +156,7 @@ export default function ProductsPage() {
                       e.stopPropagation();
                       addToCart(product);
                     }}
-                    className="px-3 py-1.5 border border-white font-lexend text-[10px] font-semibold tracking-widest uppercase text-white hover:bg-white hover:text-black transition-all flex items-center gap-1.5 relative z-10"
+                    className="w-full sm:w-auto px-3 py-1.5 border border-white font-lexend text-[10px] font-semibold tracking-widest uppercase text-white hover:bg-white hover:text-black transition-all flex items-center justify-center gap-1.5 relative z-10"
                   >
                     <ShoppingBag className="w-3 h-3" /> ADD
                   </button>
