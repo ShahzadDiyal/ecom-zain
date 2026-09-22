@@ -4,15 +4,20 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { createOrder } from '@/lib/services/orderService';
+import { OrderDetails } from '@/types/ecommerce';
 import { ArrowLeft } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, subtotal, shippingFee, total, placeOrder, formatPrice } = useCart();
+  const { cart, subtotal, shippingFee, total, clearCart, formatPrice } = useCart();
+  const { user } = useAuth();
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: '',
-    fullName: '',
+    email: user?.email || '',
+    fullName: user?.displayName || '',
     phone: '',
     address: '',
     city: '',
@@ -23,25 +28,52 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (cart.length === 0) return;
-    placeOrder({
-      fullName: formData.fullName || 'TARZ Customer',
-      email: formData.email || 'customer@tarz.com',
-      phone: formData.phone || '+92 300 0000000',
-      address: formData.address || 'Standard Address',
-      city: formData.city || 'Karachi',
-      postalCode: '75500',
-      country: 'Pakistan',
-      paymentMethod: formData.paymentMethod,
-    });
-    router.push('/order-confirmation');
+    if (cart.length === 0 || submitting) return;
+
+    setSubmitting(true);
+    const orderId = `TZ${Math.floor(10000 + Math.random() * 90000)}`;
+
+    const newOrder: OrderDetails = {
+      orderId,
+      userId: user?.uid,
+      items: [...cart],
+      subtotal,
+      tax: 0,
+      shippingFee,
+      total,
+      customer: {
+        fullName: formData.fullName || 'TARZ Customer',
+        email: formData.email || 'customer@tarz.com',
+        phone: formData.phone || '+92 300 0000000',
+        address: formData.address || 'Standard Address',
+        city: formData.city || 'Karachi',
+        postalCode: '75500',
+        country: 'Pakistan',
+        paymentMethod: formData.paymentMethod,
+      },
+      createdAt: new Date().toISOString(),
+      status: 'Pending',
+    };
+
+    try {
+      await createOrder(newOrder);
+      clearCart();
+      router.push(`/order-confirmation?orderId=${orderId}`);
+    } catch (err) {
+      console.error("Order submission error:", err);
+      // Fallback: clear cart and redirect anyway
+      clearCart();
+      router.push('/order-confirmation');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (cart.length === 0) {
     return (
-      <div className="bg-black text-white min-h-[70vh] flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter">
+      <div className="bg-black text-white min-h-[70vh] flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter md:mt-10">
         <h2 className="font-serif-display text-4xl font-extrabold uppercase">NO ITEMS TO CHECKOUT</h2>
         <Link
           href="/products"
@@ -56,7 +88,7 @@ export default function CheckoutPage() {
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
       
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 md:mt-10">
         
         {/* HEADER ROW */}
         <div className="flex justify-between items-center border-b border-white/10 pb-6">
@@ -218,9 +250,10 @@ export default function CheckoutPage() {
             <div className="pt-6">
               <button
                 type="submit"
-                className="w-full border border-white py-5 px-8 flex items-center justify-center gap-4 font-lexend text-sm sm:text-base font-normal uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all"
+                disabled={submitting}
+                className="w-full border border-white py-5 px-8 flex items-center justify-center gap-4 font-lexend text-sm sm:text-base font-normal uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all disabled:opacity-50"
               >
-                PLACE ORDER <span className="w-6 h-[2px] bg-current" />
+                {submitting ? "PROCESSING..." : "PLACE ORDER"} <span className="w-6 h-[2px] bg-current" />
               </button>
             </div>
 

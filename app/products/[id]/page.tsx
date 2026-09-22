@@ -1,23 +1,44 @@
 'use client';
 
-import React, { useState, use } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PRODUCTS } from '@/data/products';
+import { PRODUCTS as STATIC_PRODUCTS } from '@/data/products';
+import { getProductById, getProducts } from '@/lib/services/productService';
+import { Product } from '@/types/ecommerce';
 import { useCart } from '@/context/CartContext';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, Heart } from 'lucide-react';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  const { addToCart, formatPrice } = useCart();
+  const { addToCart, formatPrice, toggleWishlist, isInWishlist } = useCart();
 
-  const product = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
-  const [selectedImage, setSelectedImage] = useState(product.image);
+  const staticFallback = STATIC_PRODUCTS.find((p) => p.id === id) || STATIC_PRODUCTS[0];
+  const [product, setProduct] = useState<Product>(staticFallback);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>(STATIC_PRODUCTS.slice(0, 4));
+  const [selectedImage, setSelectedImage] = useState(staticFallback.image);
   const [selectedSize, setSelectedSize] = useState<string>('L');
   const [addedToast, setAddedToast] = useState(false);
 
-  const relatedProducts = PRODUCTS.slice(0, 4);
+  useEffect(() => {
+    async function loadProductData() {
+      try {
+        const fetchedProduct = await getProductById(id);
+        if (fetchedProduct) {
+          setProduct(fetchedProduct);
+          setSelectedImage(fetchedProduct.image);
+        }
+        const allProds = await getProducts();
+        if (allProds && allProds.length > 0) {
+          setRelatedProducts(allProds.filter((p) => p.id !== id).slice(0, 4));
+        }
+      } catch (e) {
+        console.error("Error fetching product detail:", e);
+      }
+    }
+    loadProductData();
+  }, [id]);
 
   const handleAddToCart = () => {
     addToCart(product, 1, undefined, selectedSize);
@@ -38,26 +59,28 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Main Image */}
             <div className="relative aspect-4/3 sm:aspect-square w-full bg-zinc-950 border border-white/20 overflow-hidden">
               <img
-                src={selectedImage}
+                src={selectedImage || product.image}
                 alt={product.name}
                 className="w-full h-full object-cover object-center"
               />
             </div>
 
-            {/* 3 Thumbnails */}
-            <div className="grid grid-cols-3 gap-4">
-              {product.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedImage(img)}
-                  className={`aspect-4/3 w-full bg-zinc-950 border overflow-hidden transition-all ${
-                    selectedImage === img ? 'border-white opacity-100 scale-[0.98]' : 'border-white/20 opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
+            {/* Thumbnails */}
+            {product.images && product.images.length > 0 && (
+              <div className="grid grid-cols-3 gap-4">
+                {product.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(img)}
+                    className={`aspect-4/3 w-full bg-zinc-950 border overflow-hidden transition-all ${
+                      selectedImage === img ? 'border-white opacity-100 scale-[0.98]' : 'border-white/20 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
 
           </div>
 
@@ -75,39 +98,39 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Tagline & Short intro */}
             <div className="space-y-4">
               <p className="font-inter text-sm sm:text-base font-medium uppercase tracking-wider text-white">
-                THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.
+                {product.tagline || 'THE MOUNTAIN + MOON EMBROIDERY MAKES "ALPINE" A STRONG FIT.'}
               </p>
               <p className="font-inter text-sm text-zinc-300 capitalize leading-relaxed font-medium">
-                A heavyweight everyday hoodie designed for cold-weather layering. Relaxed fit with a soft brushed interior and structured hood.
+                {product.description || "A heavyweight everyday hoodie designed for cold-weather layering. Relaxed fit with a soft brushed interior and structured hood."}
               </p>
             </div>
 
             {/* Material */}
             <div className="space-y-2 border-t border-white/10 pt-4">
               <h4 className="font-inter text-sm font-semibold capitalize text-white">MATERIAL</h4>
-              <p className="font-inter text-sm text-zinc-300 font-medium">
-                80% Cotton<br />20% Polyester
+              <p className="font-inter text-sm text-zinc-300 font-medium whitespace-pre-line">
+                {product.material || "80% Cotton\n20% Polyester"}
               </p>
             </div>
 
             {/* Weight */}
             <div className="space-y-2">
               <h4 className="font-inter text-sm font-semibold capitalize text-white">WEIGHT</h4>
-              <p className="font-inter text-sm text-zinc-300 font-medium">450 GSM</p>
+              <p className="font-inter text-sm text-zinc-300 font-medium">{product.weight || "450 GSM"}</p>
             </div>
 
             {/* Care */}
             <div className="space-y-2">
               <h4 className="font-inter text-sm font-semibold capitalize text-white">CARE</h4>
-              <p className="font-inter text-sm text-zinc-300 font-medium leading-relaxed">
-                Machine wash cold.<br />Do not bleach.<br />Tumble dry low.
+              <p className="font-inter text-sm text-zinc-300 font-medium leading-relaxed whitespace-pre-line">
+                {product.care || "Machine wash cold.\nDo not bleach.\nTumble dry low."}
               </p>
             </div>
 
             {/* Sizes */}
             <div className="space-y-3 pt-2">
               <div className="flex items-center gap-4">
-                {['S', 'M', 'L', 'XL'].map((size) => (
+                {(product.availableSizes && product.availableSizes.length > 0 ? product.availableSizes : ['S', 'M', 'L', 'XL']).map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -130,14 +153,28 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </p>
             </div>
 
-            {/* Add to Cart Button */}
+            {/* Add to Cart & Wishlist Buttons */}
             <div className="pt-2 space-y-3">
-              <button
-                onClick={handleAddToCart}
-                className="w-full sm:w-auto px-10 py-5 bg-white text-black font-lexend text-xs font-bold tracking-[0.15em] uppercase hover:bg-black hover:text-white hover:border hover:border-white transition-all flex items-center justify-center gap-4 shadow-2xl"
-              >
-                Add To Cart <span className="w-6 h-[2px] bg-current" />
-              </button>
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  onClick={handleAddToCart}
+                  className="flex-1 sm:flex-none px-10 py-5 bg-white text-black font-lexend text-xs font-bold tracking-[0.15em] uppercase hover:bg-black hover:text-white hover:border hover:border-white transition-all flex items-center justify-center gap-4 shadow-2xl"
+                >
+                  Add To Cart <span className="w-6 h-[2px] bg-current" />
+                </button>
+
+                <button
+                  onClick={() => toggleWishlist(product)}
+                  className={`p-4 border transition-all ${
+                    isInWishlist(product.id)
+                      ? 'bg-red-600 border-red-600 text-white'
+                      : 'border-white text-white hover:bg-white hover:text-black'
+                  }`}
+                  title={isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                >
+                  <Heart className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-white' : ''}`} />
+                </button>
+              </div>
 
               {addedToast && (
                 <div className="p-4 bg-white/10 border border-white text-white font-lexend text-xs tracking-widest uppercase text-center">
@@ -162,7 +199,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             BUILT FOR COLDER DAYS.
           </h3>
           <p className="font-inter text-sm sm:text-base text-zinc-300 leading-relaxed">
-            The TARZ Alpine Hoodie is a heavyweight winter essential designed for everyday comfort and effortless layering. Featuring a relaxed silhouette, a warm feel, and signature TARZ embroidery inspired by mountain landscapes, it brings together comfort and understated character. Designed to be worn on cold mornings, late-night walks, and everywhere in between.
+            {product.description || "The TARZ Alpine Hoodie is a heavyweight winter essential designed for everyday comfort and effortless layering."}
           </p>
         </div>
       </section>

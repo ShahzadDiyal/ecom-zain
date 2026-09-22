@@ -3,16 +3,33 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { getProducts } from '@/lib/services/productService';
 import { PRODUCTS } from '@/data/products';
+import { Product } from '@/types/ecommerce';
 import { ShoppingBag, ShieldCheck, Truck, RotateCcw, Award, Lock, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
   const { addToCart, formatPrice } = useCart();
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [currentFeaturedSlide, setCurrentFeaturedSlide] = useState(0);
+  const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
 
-  const bestSellers = PRODUCTS.slice(0, 4);
-  const newArrivals = [PRODUCTS[0], PRODUCTS[1], PRODUCTS[1], PRODUCTS[0]];
+  React.useEffect(() => {
+    async function loadData() {
+      try {
+        const fetched = await getProducts();
+        if (fetched && fetched.length > 0) {
+          setProductsList(fetched);
+        }
+      } catch (e) {
+        console.error("Failed to fetch home products:", e);
+      }
+    }
+    loadData();
+  }, []);
+
+  const bestSellers = productsList.slice(0, 4);
+  const newArrivals = productsList.slice(0, 4);
 
   const instagramImages = [
     'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80',
@@ -24,21 +41,21 @@ export default function HomePage() {
   const featuredSlides = [
     {
       number: '01',
-      title: 'TARZ Alpine Hoodie',
-      subtitle: 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
-      price: 6490,
+      title: productsList[0]?.name || 'TARZ Alpine Hoodie',
+      subtitle: productsList[0]?.tagline || 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
+      price: productsList[0]?.price || 6490,
       auraColor: '#B88884',
-      image: PRODUCTS[0].image,
-      product: PRODUCTS[0],
+      image: productsList[0]?.image || PRODUCTS[0].image,
+      product: productsList[0] || PRODUCTS[0],
     },
     {
       number: '02',
-      title: 'TARZ Alpine Hoodie',
-      subtitle: 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
-      price: 6490,
+      title: productsList[1]?.name || productsList[0]?.name || 'TARZ Blossom Hoodie',
+      subtitle: productsList[1]?.tagline || 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
+      price: productsList[1]?.price || 6490,
       auraColor: '#1C0C0E',
-      image: PRODUCTS[1].image,
-      product: PRODUCTS[1],
+      image: productsList[1]?.image || PRODUCTS[1]?.image || PRODUCTS[0].image,
+      product: productsList[1] || PRODUCTS[0],
     },
   ];
 

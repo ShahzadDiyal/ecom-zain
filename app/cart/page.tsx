@@ -10,7 +10,7 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="bg-black text-white min-h-[70vh] flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter">
+      <div className="bg-black text-white md:mt-10  min-h-[70vh] md:mt-10 flex flex-col items-center justify-center text-center px-6 space-y-6 font-inter">
         <h2 className="font-serif-display text-4xl font-extrabold uppercase">YOUR BAG IS EMPTY</h2>
         <p className="font-lexend text-xs tracking-widest text-zinc-400 uppercase">
           Explore our winter hoodies & essential jacket collection.
@@ -26,9 +26,9 @@ export default function CartPage() {
   }
 
   return (
-    <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black">
+    <div className="bg-black md:mt-10  text-white min-h-screen font-inter selection:bg-white selection:text-black">
       
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 space-y-12 md:mt-10 ">
         
         {/* HEADER ROW */}
         <div className="flex justify-between items-center border-b border-white/10 pb-6">
@@ -58,7 +58,7 @@ export default function CartPage() {
         <div className="space-y-0 divide-y divide-white/20">
           {cart.map(({ product, quantity, selectedColor, selectedSize }) => (
             <div
-              key={product.id}
+              key={`${product.id}-${selectedSize || 'M'}-${selectedColor || 'Burgundy'}`}
               className="py-10 grid grid-cols-1 sm:grid-cols-12 gap-8 items-center"
             >
               
