@@ -38,28 +38,37 @@ export default function HomePage() {
     'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=80'
   ];
 
-  const featuredSlides = [
-    {
-      number: '01',
-      title: productsList[0]?.name || 'TARZ Alpine Hoodie',
-      subtitle: productsList[0]?.tagline || 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
-      price: productsList[0]?.price || 6490,
-      auraColor: '#B88884',
-      image: productsList[0]?.image || PRODUCTS[0].image,
-      product: productsList[0] || PRODUCTS[0],
-    },
-    {
-      number: '02',
-      title: productsList[1]?.name || productsList[0]?.name || 'TARZ Blossom Hoodie',
-      subtitle: productsList[1]?.tagline || 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
-      price: productsList[1]?.price || 6490,
-      auraColor: '#1C0C0E',
-      image: productsList[1]?.image || PRODUCTS[1]?.image || PRODUCTS[0].image,
-      product: productsList[1] || PRODUCTS[0],
-    },
-  ];
+  const featuredSlides = React.useMemo(() => {
+    const featuredProds = productsList.filter((p) => p.isFeatured);
+    const list = [...featuredProds];
+    for (const p of productsList) {
+      if (list.length >= 3) break;
+      if (!list.some((item) => item.id === p.id)) {
+        list.push(p);
+      }
+    }
+    const items = list.slice(0, 3);
+    return items.map((prod, index) => ({
+      number: `0${index + 1}`,
+      title: prod.name,
+      subtitle: prod.tagline || prod.description || 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
+      price: prod.price,
+      auraColor: index === 0 ? '#B88884' : index === 1 ? '#1C0C0E' : '#4A2E2B',
+      image: prod.image || '/images/featured-img.png',
+      product: prod,
+    }));
+  }, [productsList]);
 
-  const activeSlide = featuredSlides[currentFeaturedSlide];
+  const activeIndex = currentFeaturedSlide < featuredSlides.length ? currentFeaturedSlide : 0;
+  const activeSlide = featuredSlides[activeIndex] || {
+    number: '01',
+    title: 'TARZ Alpine Hoodie',
+    subtitle: 'THE MOUNTAIN + MOON EMBROIDERY MAKES “ALPINE” A STRONG FIT.',
+    price: 6490,
+    auraColor: '#B88884',
+    image: '/images/featured-img.png',
+    product: PRODUCTS[0],
+  };
 
   return (
     <div className="bg-black text-white min-h-screen font-inter selection:bg-white selection:text-black overflow-x-hidden">
@@ -82,7 +91,7 @@ export default function HomePage() {
         <div className="relative z-10 max-w-5xl mx-auto space-y-6 pt-16">
           
           {/* Badge: —— 77C3 COLLECTION —— */}
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 md:mb-20 ">
             <div className="w-12 sm:w-16 h-[1.5px] bg-white" />
             <span className="font-lexend text-[14px] sm:text-[16px] tracking-[0.25em] font-medium text-white uppercase">
               77C3 COLLECTION
@@ -91,12 +100,12 @@ export default function HomePage() {
           </div>
 
           {/* Headline: WINTER, REDEFINED. */}
-          <h1 className="font-serif-display text-[40px] sm:text-[60px] lg:text-[80px] font-bold tracking-tight uppercase leading-none text-white drop-shadow-2xl">
+          <h1 className="font-kumar text-[40px] sm:text-[60px] lg:text-[80px]  tracking-tight  leading-none text-white drop-shadow-2xl">
             WINTER, REDEFINED.
           </h1>
 
           {/* Subtitle: BUILT FOR COLD DAYS. DESIGNED FOR EVERYWHERE. */}
-          <div className="font-lexend text-[16px] sm:text-[24px] tracking-[0.2em] uppercase text-white leading-relaxed max-w-xl mx-auto font-normal space-y-1">
+          <div className="font-lexend text-[16px] sm:text-[24px] uppercase text-white leading-relaxed max-w-xl mx-auto font-normal space-y-1">
             <p>BUILT FOR COLD DAYS.</p>
             <p>DESIGNED FOR EVERYWHERE.</p>
           </div>
@@ -230,39 +239,24 @@ export default function HomePage() {
         Keep below showcase
     ========================================================== */}
     <div className="relative z-10 flex justify-center items-center gap-3 mt-4">
-
-      <button
-        onClick={() => setCurrentFeaturedSlide(0)}
-        className={`
-          w-4
-          h-4
-          rotate-45
-          transition-all
-          ${
-            currentFeaturedSlide === 0
-              ? 'bg-white shadow-lg scale-110'
-              : 'bg-white/50 hover:bg-white'
-          }
-        `}
-        title="Slide 1"
-      />
-
-      <button
-        onClick={() => setCurrentFeaturedSlide(1)}
-        className={`
-          w-4
-          h-4
-          rotate-45
-          transition-all
-          ${
-            currentFeaturedSlide === 1
-              ? 'bg-white shadow-lg scale-110'
-              : 'bg-white/50 hover:bg-white'
-          }
-        `}
-        title="Slide 2"
-      />
-
+      {featuredSlides.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={() => setCurrentFeaturedSlide(idx)}
+          className={`
+            w-4
+            h-4
+            rotate-45
+            transition-all
+            ${
+              activeIndex === idx
+                ? 'bg-white shadow-lg scale-110'
+                : 'bg-white/50 hover:bg-white'
+            }
+          `}
+          title={`Slide ${idx + 1}`}
+        />
+      ))}
     </div>
 
     {/* =========================================================
@@ -292,33 +286,18 @@ export default function HomePage() {
           "
         >
 
-          {activeSlide.number === '01' ? (
-            <>
-              <div className="w-12 h-[1.5px] bg-white" />
+          <div className="w-12 h-[1.5px] bg-white" />
 
-              <span className="font-lexend text-xs tracking-widest text-white font-medium">
-                01
-              </span>
+          <span className="font-lexend text-xs tracking-widest text-white font-medium">
+            {activeSlide.number}
+          </span>
 
-              <div className="w-56 h-[1.5px] bg-white" />
-            </>
-          ) : (
-            <>
-              <div className="w-56 h-[1.5px] bg-white" />
-
-              <span className="font-lexend text-xs tracking-widest text-white font-medium">
-                02
-              </span>
-
-              <div className="w-12 h-[1.5px] bg-white" />
-            </>
-          )}
-
+          <div className="w-56 h-[1.5px] bg-white" />
         </div>
 
 
         {/* =====================================================
-            BURGUNDY HOODIE
+            BURGUNDY HOODIE / DYNAMIC WATERMARK
             FULL WIDTH WATERMARK
             Positioned BELOW INDICATOR
         ====================================================== */}
@@ -331,16 +310,16 @@ export default function HomePage() {
             w-screen
             flex
             justify-center
-            overflow-hidden
+            
           "
         >
           <span
             className="
-              font-serif-display
-              text-[90px]
+              font-kumar
+              text-[70px]
               sm:text-[140px]
               lg:text-[190px]
-              xl:text-[170px]
+              xl:text-[130px]
               font-bold
               whitespace-nowrap
               leading-none
