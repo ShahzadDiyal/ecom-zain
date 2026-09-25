@@ -142,7 +142,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       total,
       customer,
       createdAt: new Date().toLocaleString(),
-      status: 'Confirmed',
+      status: 'Pending',
     };
     setLastOrder(newOrder);
     clearCart();
